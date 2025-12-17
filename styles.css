@@ -401,6 +401,7 @@ body {
   font-weight: 500;
   text-decoration: none;
   cursor: pointer;
+  color: inherit;
   transition:
     transform 150ms ease,
     box-shadow 150ms ease,
@@ -409,13 +410,30 @@ body {
     color 150ms ease;
 }
 
+.btn,
+.btn:link,
+.btn:visited,
+.btn:hover,
+.btn:active {
+  text-decoration: none;
+  color: inherit;
+}
+
 .btn--primary {
   background: radial-gradient(circle at 10% 0, #38bdf8, #0ea5e9);
   border-color: rgba(56, 189, 248, 0.7);
-  color: #0b1120;
+  color: #0b1120 !important;
   box-shadow:
     0 16px 40px rgba(56, 189, 248, 0.55),
     0 0 0 1px rgba(15, 23, 42, 0.9);
+}
+
+.btn--primary:link,
+.btn--primary:visited,
+.btn--primary:hover,
+.btn--primary:active {
+  color: #0b1120 !important;
+  text-decoration: none;
 }
 
 .btn--primary:hover {
@@ -428,7 +446,15 @@ body {
 .btn--ghost {
   background: rgba(15, 23, 42, 0.8);
   border-color: rgba(148, 163, 184, 0.5);
-  color: #e5e7eb;
+  color: #e5e7eb !important;
+}
+
+.btn--ghost:link,
+.btn--ghost:visited,
+.btn--ghost:hover,
+.btn--ghost:active {
+  color: #e5e7eb !important;
+  text-decoration: none;
 }
 
 .btn--ghost:hover {
