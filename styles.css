@@ -1603,6 +1603,14 @@ body.easter-egg-active * {
   }
 }
 
+/* Confetti Effect */
+.confetti {
+  position: fixed;
+  pointer-events: none;
+  z-index: 10000;
+  will-change: transform, opacity;
+}
+
 /* Disable hover effects on touch devices */
 @media (hover: none) and (pointer: coarse) {
   .link-card:hover,
@@ -1615,6 +1623,13 @@ body.easter-egg-active * {
 
   .btn:hover {
     transform: none;
+  }
+}
+
+/* Reduce confetti on mobile for performance */
+@media (max-width: 720px) {
+  .confetti {
+    box-shadow: none !important;
   }
 }
 

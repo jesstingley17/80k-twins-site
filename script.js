@@ -356,6 +356,84 @@ function setupMagneticButtons() {
   // Disabled - was causing transform conflicts
 }
 
+// Confetti effect
+function createConfetti() {
+  const colors = ['#38bdf8', '#a855f7', '#ec4899', '#22c55e', '#f59e0b', '#ef4444'];
+  const confettiCount = 50;
+  const duration = 3000;
+  
+  for (let i = 0; i < confettiCount; i++) {
+    const confetti = document.createElement('div');
+    confetti.className = 'confetti';
+    
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    const size = Math.random() * 8 + 4;
+    const startX = Math.random() * window.innerWidth;
+    const startY = -10;
+    const endY = window.innerHeight + 10;
+    const rotation = Math.random() * 360;
+    const rotationSpeed = (Math.random() - 0.5) * 720;
+    const horizontalSpeed = (Math.random() - 0.5) * 200;
+    
+    confetti.style.cssText = `
+      position: fixed;
+      left: ${startX}px;
+      top: ${startY}px;
+      width: ${size}px;
+      height: ${size}px;
+      background: ${color};
+      border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
+      pointer-events: none;
+      z-index: 10000;
+      opacity: 0.9;
+      box-shadow: 0 0 6px ${color};
+    `;
+    
+    document.body.appendChild(confetti);
+    
+    const animation = confetti.animate([
+      {
+        transform: `translate(0, 0) rotate(0deg)`,
+        opacity: 0.9
+      },
+      {
+        transform: `translate(${horizontalSpeed}px, ${endY}px) rotate(${rotation + rotationSpeed}deg)`,
+        opacity: 0
+      }
+    ], {
+      duration: duration + Math.random() * 1000,
+      easing: 'cubic-bezier(0.5, 0, 0.5, 1)'
+    });
+    
+    animation.onfinish = () => {
+      confetti.remove();
+    };
+  }
+}
+
+// Add confetti to social media buttons
+function setupConfettiButtons() {
+  // Find all social media follow buttons
+  const socialButtons = document.querySelectorAll('a[href*="tiktok"], a[href*="instagram"], a[href*="youtube"], a[href*="facebook"], a[href*="twitter"]');
+  
+  socialButtons.forEach((button) => {
+    button.addEventListener('click', (e) => {
+      // Small delay to ensure navigation happens
+      setTimeout(() => {
+        createConfetti();
+      }, 100);
+    });
+  });
+  
+  // Also add to primary CTA buttons
+  const primaryButtons = document.querySelectorAll('.btn--primary, .link-card--primary');
+  primaryButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      createConfetti();
+    });
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   setupIntroVideo();
   setupReveal();
@@ -372,6 +450,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setupAnimatedGradient();
   setupEasterEgg();
   setupMagneticButtons();
+  setupConfettiButtons();
 });
 
 
