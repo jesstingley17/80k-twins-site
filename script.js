@@ -223,7 +223,43 @@ function setupContactForm() {
   });
 }
 
+function setupIntroVideo() {
+  const overlay = document.getElementById("intro-overlay");
+  const video = document.getElementById("intro-video");
+
+  if (!overlay || !video) return;
+
+  // Hide overlay when video ends
+  video.addEventListener("ended", () => {
+    overlay.classList.add("is-hidden");
+    // Allow page interactions after intro
+    setTimeout(() => {
+      overlay.style.display = "none";
+    }, 600);
+  });
+
+  // Skip intro on click/tap
+  overlay.addEventListener("click", () => {
+    video.pause();
+    overlay.classList.add("is-hidden");
+    setTimeout(() => {
+      overlay.style.display = "none";
+    }, 600);
+  });
+
+  // Fallback: hide after 5 seconds if video doesn't load/play
+  setTimeout(() => {
+    if (!overlay.classList.contains("is-hidden")) {
+      overlay.classList.add("is-hidden");
+      setTimeout(() => {
+        overlay.style.display = "none";
+      }, 600);
+    }
+  }, 5000);
+}
+
 document.addEventListener("DOMContentLoaded", () => {
+  setupIntroVideo();
   setupReveal();
   setupParallax();
   setupSmoothScroll();
