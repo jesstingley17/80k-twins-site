@@ -330,9 +330,34 @@ function setupButtonRipples() {
   });
 }
 
-// Interactive card tilt - disabled to prevent glitches
+// Interactive card tilt - enabled with reduced intensity
 function setupCardTilts() {
-  // Disabled - was causing conflicts with other animations
+  const cards = document.querySelectorAll(".link-card, .watch-card, .about-inner, .contact-inner, .feature-inner");
+  
+  cards.forEach((card) => {
+    let rafId = null;
+    
+    card.addEventListener("mousemove", (e) => {
+      if (rafId) cancelAnimationFrame(rafId);
+      
+      rafId = requestAnimationFrame(() => {
+        const rect = card.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        
+        // Reduced intensity for smoothness
+        const rotateX = y * -1;
+        const rotateY = x * 1;
+        
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.01)`;
+      });
+    });
+    
+    card.addEventListener("mouseleave", () => {
+      if (rafId) cancelAnimationFrame(rafId);
+      card.style.transform = "";
+    });
+  });
 }
 
 // Animated gradient background - disabled to prevent dizziness
@@ -368,9 +393,26 @@ function setupEasterEgg() {
 
 // Removed glitch effect - was causing visual issues
 
-// Magnetic buttons - disabled to prevent glitches
+// Magnetic buttons - enabled for buttons only
 function setupMagneticButtons() {
-  // Disabled - was causing transform conflicts
+  const magneticElements = document.querySelectorAll(".btn, .filter-pill");
+  
+  magneticElements.forEach((el) => {
+    el.addEventListener("mousemove", (e) => {
+      const rect = el.getBoundingClientRect();
+      const x = e.clientX - (rect.left + rect.width / 2);
+      const y = e.clientY - (rect.top + rect.height / 2);
+      
+      const moveX = x * 0.1; // Reduced intensity
+      const moveY = y * 0.1;
+      
+      el.style.transform = `translate(${moveX}px, ${moveY}px)`;
+    });
+    
+    el.addEventListener("mouseleave", () => {
+      el.style.transform = "";
+    });
+  });
 }
 
 // Confetti effect
@@ -451,29 +493,31 @@ function setupConfettiButtons() {
   });
 }
 
-// Prioritize critical functionality
+// Initialize all functionality
 document.addEventListener("DOMContentLoaded", () => {
-  // Critical - load immediately
+  // Core functionality - load immediately
   setupReveal();
   setupSmoothScroll();
   setupNavHighlight();
   setupLinkFilters();
   setupContactForm();
+  
+  // Interactive features - load immediately
   setupIntroVideo();
   setupButtonRipples();
   setupConfettiButtons();
+  setupHeroTilt();
+  setupCardTilts();
+  setupMagneticButtons();
   
-  // Load other features after a short delay
+  // Visual effects - load after short delay
   setTimeout(() => {
     setupParallax();
-    setupHeroTilt();
-    setupCardTilts();
     setupAnimatedGradient();
     setupEasterEgg();
-    setupMagneticButtons();
     setupCursorTrail();
     setupFloatingParticles();
-  }, 100);
+  }, 200);
 });
 
 
