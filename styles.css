@@ -51,6 +51,7 @@ body {
 
 :root {
   --page-max-width: 1120px;
+  --content-max-width: 1040px;
   --radius-lg: 24px;
   --radius-md: 18px;
   --radius-pill: 999px;
@@ -247,7 +248,7 @@ body {
 
 .hero-main {
   width: 100%;
-  max-width: 100%;
+  max-width: var(--content-max-width);
   padding: 24px 22px;
   border-radius: var(--radius-lg);
   border: 1px solid rgba(148, 163, 184, 0.45);
@@ -562,7 +563,7 @@ body {
 
 .links > * {
   width: 100%;
-  max-width: 100%;
+  max-width: var(--content-max-width);
 }
 
 .links-filters {
@@ -610,7 +611,7 @@ body {
 
 .watch-card {
   width: 100%;
-  max-width: 100%;
+  max-width: var(--content-max-width);
   padding: 16px 16px 14px;
   border-radius: var(--radius-lg);
   border: 1px solid rgba(148, 163, 184, 0.5);
@@ -623,7 +624,7 @@ body {
 }
 
 .watch-card--stacked {
-  max-width: 880px;
+  max-width: var(--content-max-width);
 }
 
 .watch-divider {
@@ -916,7 +917,7 @@ body {
 
 .about-inner {
   width: 100%;
-  max-width: 100%;
+  max-width: var(--content-max-width);
   padding: 22px 20px 20px;
   border-radius: var(--radius-lg);
   border: 1px solid rgba(148, 163, 184, 0.5);
@@ -1002,7 +1003,7 @@ body {
 
 .contact-inner {
   width: 100%;
-  max-width: 100%;
+  max-width: var(--content-max-width);
   padding: 22px 20px 20px;
   border-radius: var(--radius-lg);
   border: 1px solid rgba(148, 163, 184, 0.5);
@@ -1090,7 +1091,7 @@ body {
 
 .feature-inner {
   width: 100%;
-  max-width: 100%;
+  max-width: var(--content-max-width);
   padding: 20px 18px 18px;
   border-radius: var(--radius-lg);
   border: 1px solid rgba(129, 140, 248, 0.7);
