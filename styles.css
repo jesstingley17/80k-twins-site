@@ -120,6 +120,13 @@ body {
   padding: 32px 20px 56px;
 }
 
+/* Mobile-first optimizations */
+@media (max-width: 480px) {
+  .page {
+    padding: 20px 16px 40px;
+  }
+}
+
 .site-header {
   display: flex;
   align-items: center;
@@ -1362,6 +1369,7 @@ body.easter-egg-active * {
 @media (max-width: 960px) {
   .links-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
   }
 
   .link-card--primary {
@@ -1370,54 +1378,243 @@ body.easter-egg-active * {
 
   .about-grid {
     grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.4fr);
+    gap: 20px;
   }
 
+  .contact-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
 }
 
 @media (max-width: 720px) {
+  :root {
+    --content-max-width: 100%;
+  }
+
+  .page {
+    padding: 16px 12px 32px;
+  }
+
   .site-header {
     flex-direction: column;
     align-items: flex-start;
-    padding: 14px 16px;
+    padding: 12px 14px;
+    gap: 12px;
+  }
+
+  .brand-pill {
+    width: 100%;
+    justify-content: flex-start;
   }
 
   .site-nav {
     width: 100%;
     justify-content: flex-start;
     flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .nav-link {
+    padding: 8px 12px;
+    font-size: 12px;
+    min-height: 44px; /* Touch target size */
+    display: flex;
+    align-items: center;
   }
 
   .hero {
-    grid-template-columns: minmax(0, 1fr);
+    margin-top: 16px;
+    margin-bottom: 32px;
   }
 
   .hero-main {
-    padding: 18px 16px;
+    padding: 20px 16px;
+    gap: 16px;
   }
 
   .hero-avatar-wrap {
-    width: 112px;
-    height: 112px;
+    width: 100px;
+    height: 100px;
+  }
+
+  .hero-copy h1 {
+    font-size: 28px;
+  }
+
+  .hero-subtitle {
+    font-size: 13px;
+  }
+
+  .hero-ctas {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .btn {
+    width: 100%;
+    min-height: 44px; /* Touch target size */
+    padding: 12px 20px;
+    font-size: 14px;
+    justify-content: center;
   }
 
   .links-grid {
     grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .link-card {
+    padding: 16px 14px;
+    min-height: 60px;
+  }
+
+  .links-filters {
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+
+  .filter-pill {
+    padding: 8px 14px;
+    min-height: 44px; /* Touch target size */
+    font-size: 12px;
+  }
+
+  .section-header {
+    margin-bottom: 16px;
+  }
+
+  .section-header h2 {
+    font-size: 20px;
+  }
+
+  .section-subtitle {
+    font-size: 12px;
   }
 
   .about-inner {
-    padding: 18px 16px;
+    padding: 20px 16px;
   }
 
   .about-grid {
     grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
   }
 
-  .feature-inner {
-    padding: 18px 16px;
+  .contact-inner {
+    padding: 20px 16px;
+  }
+
+  .contact-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+
+  .field-input,
+  .field-textarea {
+    min-height: 44px; /* Touch target size */
+    padding: 12px 14px;
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+
+  .field-textarea {
+    min-height: 120px;
+  }
+
+  .watch-card {
+    padding: 16px 14px;
   }
 
   .youtube-embed-inner {
     max-width: 100%;
+  }
+
+  .insta-embed {
+    max-width: 100%;
+  }
+
+  .feature-inner {
+    padding: 20px 16px;
+  }
+
+  .feature-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .feature-actions .btn {
+    width: 100%;
+  }
+}
+
+/* Extra small mobile devices */
+@media (max-width: 480px) {
+  .page {
+    padding: 12px 10px 24px;
+  }
+
+  .site-header {
+    padding: 10px 12px;
+  }
+
+  .hero-main {
+    padding: 16px 12px;
+  }
+
+  .hero-avatar-wrap {
+    width: 80px;
+    height: 80px;
+  }
+
+  .hero-copy h1 {
+    font-size: 24px;
+  }
+
+  .brand-mark {
+    width: 32px;
+    height: 32px;
+  }
+
+  .brand-logo {
+    width: 32px;
+    height: 32px;
+  }
+
+  .link-card {
+    padding: 14px 12px;
+  }
+
+  .about-inner,
+  .contact-inner,
+  .watch-card,
+  .feature-inner {
+    padding: 16px 12px;
+  }
+
+  /* Disable heavy animations on very small screens */
+  .floating-particle {
+    display: none;
+  }
+
+  .cursor-trail-dot {
+    display: none;
+  }
+}
+
+/* Disable hover effects on touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .link-card:hover,
+  .watch-card:hover,
+  .about-inner:hover,
+  .contact-inner:hover,
+  .feature-inner:hover {
+    transform: none;
+  }
+
+  .btn:hover {
+    transform: none;
   }
 }
 
