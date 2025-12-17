@@ -14,7 +14,15 @@
     <link
       href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap"
       rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
     />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
     <link rel="stylesheet" href="styles.css" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -28,6 +36,7 @@
         autoplay
         muted
         playsinline
+        preload="metadata"
         id="intro-video"
       >
         <source
@@ -48,7 +57,7 @@
       <header class="site-header">
         <a href="#top" class="brand-pill">
           <span class="brand-mark">
-            <img src="assets/80k-logo.PNG" alt="80k Twins Logo" class="brand-logo" />
+            <img src="assets/80k-logo.PNG" alt="80k Twins Logo" class="brand-logo" loading="eager" width="40" height="40" />
           </span>
           <span class="brand-text">
             <span class="brand-name">80k Twins</span>
@@ -72,6 +81,9 @@
               <img
                 src="assets/80ktwins-hero.jpg"
                 alt="80k Twins standing together in ADE hoodies by a waterfall"
+                loading="eager"
+                width="132"
+                height="132"
               />
             </div>
             <div class="hero-ring hero-ring--outer"></div>
@@ -242,6 +254,7 @@
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowfullscreen
+                loading="lazy"
               ></iframe>
             </div>
           </div>
@@ -270,6 +283,7 @@
                 frameborder="0"
                 allowtransparency="true"
                 scrolling="no"
+                loading="lazy"
               ></iframe>
             </div>
             <div class="insta-embed">
@@ -279,6 +293,7 @@
                 frameborder="0"
                 allowtransparency="true"
                 scrolling="no"
+                loading="lazy"
               ></iframe>
             </div>
             <div class="insta-embed">
@@ -288,6 +303,7 @@
                 frameborder="0"
                 allowtransparency="true"
                 scrolling="no"
+                loading="lazy"
               ></iframe>
             </div>
           </div>
@@ -335,6 +351,7 @@
                 <img
                   src="assets/IMG_3464.JPG"
                   alt="80k Twins sitting side by side in Motion Maniac hoodies"
+                  loading="lazy"
                 />
               </div>
 
@@ -454,7 +471,7 @@
       </section>
     </main>
 
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
   </body>
 </html>
 
