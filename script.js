@@ -1,5 +1,8 @@
 // Scroll reveal, parallax, and interactive behavior for 80k Twins site
 
+// Mark JS as enabled for progressive enhancement
+document.documentElement.classList.add('js-enabled');
+
 function setupReveal() {
   const revealEls = document.querySelectorAll("[data-reveal]");
 
@@ -258,31 +261,17 @@ function setupIntroVideo() {
   }, 5000);
 }
 
-// Cursor trail effect - disabled on mobile, deferred on desktop
+// Cursor trail effect - disabled to prevent dizziness
 function setupCursorTrail() {
-  // Only enable on desktop, non-touch devices
-  if (window.matchMedia('(pointer: fine)').matches && window.innerWidth > 720) {
-    // Defer cursor trail until after initial load
-    setTimeout(() => {
-      // Minimal cursor trail implementation can go here if needed
-    }, 2000);
-  }
+  // Disabled - can cause motion sickness
 }
 
-// Floating particles - reduced and slowed for accessibility, deferred for performance
+// Floating particles - reduced and slowed for accessibility
 function setupFloatingParticles() {
-  // Defer particle creation until after page load
-  if (document.readyState === 'loading') {
-    window.addEventListener('load', () => {
-      setTimeout(setupFloatingParticles, 1000);
-    });
-    return;
-  }
-
   const container = document.querySelector(".page-bg");
   if (!container) return;
 
-  const particleCount = 6; // Further reduced for performance
+  const particleCount = 6; // Reduced for performance
   const particles = [];
 
   for (let i = 0; i < particleCount; i++) {
