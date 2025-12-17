@@ -437,23 +437,41 @@ function setupConfettiButtons() {
   });
 }
 
+// Prioritize critical functionality
 document.addEventListener("DOMContentLoaded", () => {
-  setupIntroVideo();
+  // Critical - load immediately
   setupReveal();
-  setupParallax();
   setupSmoothScroll();
   setupNavHighlight();
   setupLinkFilters();
-  setupHeroTilt();
   setupContactForm();
-  setupCursorTrail();
-  setupFloatingParticles();
-  setupButtonRipples();
-  setupCardTilts();
-  setupAnimatedGradient();
-  setupEasterEgg();
-  setupMagneticButtons();
-  setupConfettiButtons();
+  
+  // Defer non-critical features
+  requestIdleCallback(() => {
+    setupIntroVideo();
+    setupParallax();
+    setupHeroTilt();
+    setupButtonRipples();
+    setupCardTilts();
+    setupAnimatedGradient();
+    setupEasterEgg();
+    setupMagneticButtons();
+    setupConfettiButtons();
+  }, { timeout: 2000 });
+  
+  // Defer visual effects even more
+  setTimeout(() => {
+    setupCursorTrail();
+    setupFloatingParticles();
+  }, 1000);
 });
+
+// Fallback for browsers without requestIdleCallback
+if (!window.requestIdleCallback) {
+  window.requestIdleCallback = (cb, opts) => {
+    const timeout = opts?.timeout || 0;
+    return setTimeout(cb, timeout);
+  };
+}
 
 

@@ -80,6 +80,8 @@ body {
   inset: 0;
   overflow: hidden;
   z-index: -1;
+  will-change: auto;
+  transform: translateZ(0);
 }
 
 .bg-gradient {
