@@ -131,29 +131,29 @@ function setupHeroTilt() {
   if (!hero || !avatarWrap) return;
 
   let rafId = null;
-  let lastUpdate = 0;
 
   hero.addEventListener("pointermove", (event) => {
-    const now = performance.now();
-    // Throttle to 60fps max
-    if (now - lastUpdate < 16) return;
-    lastUpdate = now;
-
     if (rafId) cancelAnimationFrame(rafId);
     
     rafId = requestAnimationFrame(() => {
       const rect = hero.getBoundingClientRect();
       const x = (event.clientX - rect.left) / rect.width - 0.5;
       const y = (event.clientY - rect.top) / rect.height - 0.5;
-      // Reduced from 8deg to 3deg for less motion
-      const rotateX = y * -3;
-      const rotateY = x * 3;
+      // More noticeable tilt
+      const rotateX = y * -5;
+      const rotateY = x * 5;
       avatarWrap.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(0)`;
+      avatarWrap.style.transition = 'none';
     });
+  });
+
+  hero.addEventListener("pointerenter", () => {
+    avatarWrap.style.transition = 'transform 0.1s ease-out';
   });
 
   hero.addEventListener("pointerleave", () => {
     if (rafId) cancelAnimationFrame(rafId);
+    avatarWrap.style.transition = 'transform 0.3s ease-out';
     avatarWrap.style.transform = "";
   });
 }
@@ -303,17 +303,21 @@ function setupFloatingParticles() {
   }
 }
 
-// Button ripple effect
+// Button ripple effect - enhanced
 function setupButtonRipples() {
   const buttons = document.querySelectorAll(".btn, .link-card, .filter-pill");
   
   buttons.forEach((button) => {
     button.addEventListener("click", function(e) {
+      // Remove any existing ripples
+      const existingRipples = this.querySelectorAll(".ripple");
+      existingRipples.forEach(r => r.remove());
+      
       const ripple = document.createElement("span");
       ripple.className = "ripple";
       
       const rect = this.getBoundingClientRect();
-      const size = Math.max(rect.width, rect.height);
+      const size = Math.max(rect.width, rect.height) * 2;
       const x = e.clientX - rect.left - size / 2;
       const y = e.clientY - rect.top - size / 2;
       
@@ -327,10 +331,20 @@ function setupButtonRipples() {
         ripple.remove();
       }, 600);
     });
+    
+    // Add hover scale effect
+    button.addEventListener("mouseenter", function() {
+      this.style.transform = "scale(1.05)";
+      this.style.transition = "transform 0.2s ease";
+    });
+    
+    button.addEventListener("mouseleave", function() {
+      this.style.transform = "";
+    });
   });
 }
 
-// Interactive card tilt - enabled with reduced intensity
+// Interactive card tilt - enhanced interactivity
 function setupCardTilts() {
   const cards = document.querySelectorAll(".link-card, .watch-card, .about-inner, .contact-inner, .feature-inner");
   
@@ -345,16 +359,22 @@ function setupCardTilts() {
         const x = (e.clientX - rect.left) / rect.width - 0.5;
         const y = (e.clientY - rect.top) / rect.height - 0.5;
         
-        // Reduced intensity for smoothness
-        const rotateX = y * -1;
-        const rotateY = x * 1;
+        // More noticeable tilt
+        const rotateX = y * -2;
+        const rotateY = x * 2;
         
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.01)`;
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+        card.style.transition = 'none';
       });
+    });
+    
+    card.addEventListener("mouseenter", () => {
+      card.style.transition = 'transform 0.1s ease-out';
     });
     
     card.addEventListener("mouseleave", () => {
       if (rafId) cancelAnimationFrame(rafId);
+      card.style.transition = 'transform 0.3s ease-out';
       card.style.transform = "";
     });
   });
@@ -393,9 +413,9 @@ function setupEasterEgg() {
 
 // Removed glitch effect - was causing visual issues
 
-// Magnetic buttons - enabled for buttons only
+// Magnetic buttons - enhanced for better interactivity
 function setupMagneticButtons() {
-  const magneticElements = document.querySelectorAll(".btn, .filter-pill");
+  const magneticElements = document.querySelectorAll(".btn, .filter-pill, .link-card");
   
   magneticElements.forEach((el) => {
     el.addEventListener("mousemove", (e) => {
@@ -403,13 +423,15 @@ function setupMagneticButtons() {
       const x = e.clientX - (rect.left + rect.width / 2);
       const y = e.clientY - (rect.top + rect.height / 2);
       
-      const moveX = x * 0.1; // Reduced intensity
-      const moveY = y * 0.1;
+      const moveX = x * 0.2; // More noticeable
+      const moveY = y * 0.2;
       
       el.style.transform = `translate(${moveX}px, ${moveY}px)`;
+      el.style.transition = 'transform 0.1s ease-out';
     });
     
     el.addEventListener("mouseleave", () => {
+      el.style.transition = 'transform 0.3s ease-out';
       el.style.transform = "";
     });
   });
@@ -502,7 +524,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setupLinkFilters();
   setupContactForm();
   
-  // Interactive features - load immediately
+  // Interactive features - load immediately for best UX
   setupIntroVideo();
   setupButtonRipples();
   setupConfettiButtons();
@@ -517,7 +539,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setupEasterEgg();
     setupCursorTrail();
     setupFloatingParticles();
-  }, 200);
+  }, 100);
 });
 
 
