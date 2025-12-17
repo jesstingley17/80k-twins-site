@@ -258,10 +258,10 @@ function setupIntroVideo() {
   }, 5000);
 }
 
-// Cursor trail effect
+// Cursor trail effect - optimized for performance
 function setupCursorTrail() {
   const trail = [];
-  const trailLength = 20;
+  const trailLength = 12; // Reduced from 20 for better performance
   let mouseX = 0;
   let mouseY = 0;
 
@@ -269,33 +269,43 @@ function setupCursorTrail() {
   for (let i = 0; i < trailLength; i++) {
     const dot = document.createElement("div");
     dot.className = "cursor-trail-dot";
-    dot.style.opacity = (trailLength - i) / trailLength * 0.4;
+    dot.style.opacity = (trailLength - i) / trailLength * 0.3;
     dot.style.transform = `scale(${(trailLength - i) / trailLength * 0.3})`;
     document.body.appendChild(dot);
     trail.push({ element: dot, x: 0, y: 0 });
   }
 
   let animationFrame = null;
+  let lastUpdate = 0;
 
-  function animate() {
+  function animate(currentTime) {
+    // Throttle updates to 60fps
+    if (currentTime - lastUpdate < 16) {
+      animationFrame = requestAnimationFrame(animate);
+      return;
+    }
+    
     let x = mouseX;
     let y = mouseY;
 
     trail.forEach((point, index) => {
       const nextPoint = trail[index + 1] || { x, y };
-      point.x += (nextPoint.x - point.x) * 0.3;
-      point.y += (nextPoint.y - point.y) * 0.3;
+      point.x += (nextPoint.x - point.x) * 0.25;
+      point.y += (nextPoint.y - point.y) * 0.25;
       point.element.style.left = point.x + "px";
       point.element.style.top = point.y + "px";
     });
 
+    lastUpdate = currentTime;
     animationFrame = requestAnimationFrame(animate);
   }
 
   document.addEventListener("mousemove", (e) => {
     mouseX = e.clientX;
     mouseY = e.clientY;
-    if (!animationFrame) animate();
+    if (!animationFrame) {
+      animationFrame = requestAnimationFrame(animate);
+    }
   });
 }
 
@@ -349,51 +359,64 @@ function setupButtonRipples() {
   });
 }
 
-// Interactive card tilt on all cards
+// Interactive card tilt on all cards - optimized to prevent conflicts
 function setupCardTilts() {
   const cards = document.querySelectorAll(".link-card, .watch-card, .about-inner, .contact-inner, .feature-inner");
   
   cards.forEach((card) => {
+    let rafId = null;
+    
     card.addEventListener("mousemove", (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      if (rafId) cancelAnimationFrame(rafId);
       
-      const rotateX = y * -3;
-      const rotateY = x * 3;
-      
-      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+      rafId = requestAnimationFrame(() => {
+        const rect = card.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        
+        const rotateX = y * -3;
+        const rotateY = x * 3;
+        
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+      });
     });
     
     card.addEventListener("mouseleave", () => {
+      if (rafId) cancelAnimationFrame(rafId);
       card.style.transform = "";
     });
   });
 }
 
-// Animated gradient background
+// Animated gradient background - slowed down to prevent glitching
 function setupAnimatedGradient() {
   const gradient = document.querySelector(".bg-gradient");
   if (!gradient) return;
   
   let hue = 0;
+  let lastTime = 0;
   
-  function animate() {
-    hue = (hue + 0.5) % 360;
-    const hue1 = hue;
-    const hue2 = (hue + 60) % 360;
-    const hue3 = (hue + 120) % 360;
-    
-    gradient.style.background = `
-      radial-gradient(circle at top left, hsla(${hue1}, 70%, 60%, 0.3), transparent 55%),
-      radial-gradient(circle at bottom right, hsla(${hue2}, 70%, 60%, 0.25), transparent 55%),
-      radial-gradient(circle at top right, hsla(${hue3}, 70%, 60%, 0.18), transparent 50%)
-    `;
+  function animate(currentTime) {
+    // Only update every 100ms to reduce performance impact
+    if (currentTime - lastTime > 100) {
+      hue = (hue + 0.1) % 360;
+      const hue1 = hue;
+      const hue2 = (hue + 60) % 360;
+      const hue3 = (hue + 120) % 360;
+      
+      gradient.style.background = `
+        radial-gradient(circle at top left, hsla(${hue1}, 70%, 60%, 0.3), transparent 55%),
+        radial-gradient(circle at bottom right, hsla(${hue2}, 70%, 60%, 0.25), transparent 55%),
+        radial-gradient(circle at top right, hsla(${hue3}, 70%, 60%, 0.18), transparent 50%)
+      `;
+      
+      lastTime = currentTime;
+    }
     
     requestAnimationFrame(animate);
   }
   
-  animate();
+  requestAnimationFrame(animate);
 }
 
 // Easter egg: Konami code
@@ -422,18 +445,7 @@ function setupEasterEgg() {
   });
 }
 
-// Glitch effect on hover for hero
-function setupGlitchEffect() {
-  const heroTitle = document.querySelector(".hero-title");
-  if (!heroTitle) return;
-  
-  heroTitle.addEventListener("mouseenter", () => {
-    heroTitle.classList.add("glitch");
-    setTimeout(() => {
-      heroTitle.classList.remove("glitch");
-    }, 600);
-  });
-}
+// Removed glitch effect - was causing visual issues
 
 // Magnetic buttons (only for buttons, not cards)
 function setupMagneticButtons() {
@@ -472,7 +484,6 @@ document.addEventListener("DOMContentLoaded", () => {
   setupCardTilts();
   setupAnimatedGradient();
   setupEasterEgg();
-  setupGlitchEffect();
   setupMagneticButtons();
 });
 
