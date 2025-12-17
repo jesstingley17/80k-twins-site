@@ -26,22 +26,8 @@ function setupReveal() {
 }
 
 function setupParallax() {
-  const orbits = document.querySelectorAll(".bg-orbit");
-
-  if (!orbits.length) return;
-
-  window.addEventListener("pointermove", (event) => {
-    const { innerWidth, innerHeight } = window;
-    const xNorm = (event.clientX / innerWidth - 0.5) * 2;
-    const yNorm = (event.clientY / innerHeight - 0.5) * 2;
-
-    orbits.forEach((orbit, index) => {
-      const intensity = (index + 1) * 4;
-      const xOffset = -xNorm * intensity;
-      const yOffset = -yNorm * intensity;
-      orbit.style.transform = `translate3d(${xOffset}px, ${yOffset}px, 0)`;
-    });
-  });
+  // Disabled - parallax can cause motion sickness
+  // Keeping orbits static for better accessibility
 }
 
 function setupSmoothScroll() {
@@ -131,8 +117,9 @@ function setupHeroTilt() {
     const rect = hero.getBoundingClientRect();
     const x = (event.clientX - rect.left) / rect.width - 0.5;
     const y = (event.clientY - rect.top) / rect.height - 0.5;
-    const rotateX = y * -8;
-    const rotateY = x * 8;
+    // Reduced from 8deg to 4deg for less motion
+    const rotateX = y * -4;
+    const rotateY = x * 4;
     avatarWrap.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(0)`;
   });
 
@@ -258,75 +245,29 @@ function setupIntroVideo() {
   }, 5000);
 }
 
-// Cursor trail effect - optimized for performance
+// Cursor trail effect - disabled to prevent dizziness
 function setupCursorTrail() {
-  const trail = [];
-  const trailLength = 12; // Reduced from 20 for better performance
-  let mouseX = 0;
-  let mouseY = 0;
-
-  // Create trail elements
-  for (let i = 0; i < trailLength; i++) {
-    const dot = document.createElement("div");
-    dot.className = "cursor-trail-dot";
-    dot.style.opacity = (trailLength - i) / trailLength * 0.3;
-    dot.style.transform = `scale(${(trailLength - i) / trailLength * 0.3})`;
-    document.body.appendChild(dot);
-    trail.push({ element: dot, x: 0, y: 0 });
-  }
-
-  let animationFrame = null;
-  let lastUpdate = 0;
-
-  function animate(currentTime) {
-    // Throttle updates to 60fps
-    if (currentTime - lastUpdate < 16) {
-      animationFrame = requestAnimationFrame(animate);
-      return;
-    }
-    
-    let x = mouseX;
-    let y = mouseY;
-
-    trail.forEach((point, index) => {
-      const nextPoint = trail[index + 1] || { x, y };
-      point.x += (nextPoint.x - point.x) * 0.25;
-      point.y += (nextPoint.y - point.y) * 0.25;
-      point.element.style.left = point.x + "px";
-      point.element.style.top = point.y + "px";
-    });
-
-    lastUpdate = currentTime;
-    animationFrame = requestAnimationFrame(animate);
-  }
-
-  document.addEventListener("mousemove", (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    if (!animationFrame) {
-      animationFrame = requestAnimationFrame(animate);
-    }
-  });
+  // Disabled - can cause motion sickness
 }
 
-// Floating particles
+// Floating particles - reduced and slowed for accessibility
 function setupFloatingParticles() {
   const container = document.querySelector(".page-bg");
   if (!container) return;
 
-  const particleCount = 30;
+  const particleCount = 8; // Reduced from 30
   const particles = [];
 
   for (let i = 0; i < particleCount; i++) {
     const particle = document.createElement("div");
     particle.className = "floating-particle";
-    const size = Math.random() * 4 + 2;
+    const size = Math.random() * 3 + 2;
     particle.style.width = size + "px";
     particle.style.height = size + "px";
     particle.style.left = Math.random() * 100 + "%";
     particle.style.top = Math.random() * 100 + "%";
     particle.style.animationDelay = Math.random() * 20 + "s";
-    particle.style.opacity = Math.random() * 0.5 + 0.2;
+    particle.style.opacity = Math.random() * 0.3 + 0.1; // More subtle
     container.appendChild(particle);
     particles.push(particle);
   }
@@ -359,7 +300,7 @@ function setupButtonRipples() {
   });
 }
 
-// Interactive card tilt on all cards - optimized to prevent conflicts
+// Interactive card tilt - reduced intensity to prevent dizziness
 function setupCardTilts() {
   const cards = document.querySelectorAll(".link-card, .watch-card, .about-inner, .contact-inner, .feature-inner");
   
@@ -374,10 +315,11 @@ function setupCardTilts() {
         const x = (e.clientX - rect.left) / rect.width - 0.5;
         const y = (e.clientY - rect.top) / rect.height - 0.5;
         
-        const rotateX = y * -3;
-        const rotateY = x * 3;
+        // Reduced from 3deg to 1.5deg for less motion
+        const rotateX = y * -1.5;
+        const rotateY = x * 1.5;
         
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.01)`;
       });
     });
     
@@ -388,35 +330,9 @@ function setupCardTilts() {
   });
 }
 
-// Animated gradient background - slowed down to prevent glitching
+// Animated gradient background - disabled to prevent dizziness
 function setupAnimatedGradient() {
-  const gradient = document.querySelector(".bg-gradient");
-  if (!gradient) return;
-  
-  let hue = 0;
-  let lastTime = 0;
-  
-  function animate(currentTime) {
-    // Only update every 100ms to reduce performance impact
-    if (currentTime - lastTime > 100) {
-      hue = (hue + 0.1) % 360;
-      const hue1 = hue;
-      const hue2 = (hue + 60) % 360;
-      const hue3 = (hue + 120) % 360;
-      
-      gradient.style.background = `
-        radial-gradient(circle at top left, hsla(${hue1}, 70%, 60%, 0.3), transparent 55%),
-        radial-gradient(circle at bottom right, hsla(${hue2}, 70%, 60%, 0.25), transparent 55%),
-        radial-gradient(circle at top right, hsla(${hue3}, 70%, 60%, 0.18), transparent 50%)
-      `;
-      
-      lastTime = currentTime;
-    }
-    
-    requestAnimationFrame(animate);
-  }
-  
-  requestAnimationFrame(animate);
+  // Disabled - static gradient is less disorienting
 }
 
 // Easter egg: Konami code
