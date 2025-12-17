@@ -38,6 +38,7 @@
           <a href="#links" class="nav-link">Links</a>
           <a href="#watch" class="nav-link">Watch</a>
           <a href="#about" class="nav-link">About</a>
+          <a href="#contact" class="nav-link">Contact</a>
           <a href="#feature" class="nav-link">Collab</a>
         </nav>
       </header>
@@ -317,6 +318,74 @@
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="contact" id="contact">
+        <div class="contact-inner">
+          <header class="section-header" data-reveal>
+            <p class="eyebrow">Reach out</p>
+            <h2>Contact the 80k Twins</h2>
+            <p class="section-subtitle">
+              For collabs, business, or serious inquiries only. Drop a message and we&apos;ll hit you back.
+            </p>
+          </header>
+
+          <div class="contact-grid">
+            <div class="contact-copy" data-reveal>
+              <p>
+                Tell us who you are, what you&apos;re building, and why you think the 80k Twins should be part of it.
+              </p>
+              <p>
+                We usually reply within <strong>1–3 business days</strong>. For anything urgent, use the email link up top.
+              </p>
+            </div>
+
+            <form class="contact-form" id="contact-form" novalidate data-reveal data-reveal-delay="80">
+              <div class="field">
+                <label class="field-label" for="contact-name">Name</label>
+                <input
+                  class="field-input"
+                  type="text"
+                  id="contact-name"
+                  name="name"
+                  autocomplete="name"
+                  required
+                />
+                <p class="field-error" data-error-for="name"></p>
+              </div>
+
+              <div class="field">
+                <label class="field-label" for="contact-email">Email</label>
+                <input
+                  class="field-input"
+                  type="email"
+                  id="contact-email"
+                  name="email"
+                  autocomplete="email"
+                  required
+                />
+                <p class="field-error" data-error-for="email"></p>
+              </div>
+
+              <div class="field">
+                <label class="field-label" for="contact-message">Message</label>
+                <textarea
+                  class="field-textarea"
+                  id="contact-message"
+                  name="message"
+                  rows="4"
+                  required
+                ></textarea>
+                <p class="field-error" data-error-for="message"></p>
+              </div>
+
+              <button class="btn btn--primary" type="submit">
+                Send message
+              </button>
+              <p class="contact-note" id="contact-status" aria-live="polite"></p>
+            </form>
           </div>
         </div>
       </section>

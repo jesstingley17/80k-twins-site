@@ -141,6 +141,88 @@ function setupHeroTilt() {
   });
 }
 
+function setupContactForm() {
+  const form = document.getElementById("contact-form");
+  if (!form) return;
+
+  const statusEl = document.getElementById("contact-status");
+  const errorEls = {
+    name: form.querySelector('[data-error-for="name"]'),
+    email: form.querySelector('[data-error-for="email"]'),
+    message: form.querySelector('[data-error-for="message"]'),
+  };
+
+  function setStatus(message, isError = false) {
+    if (!statusEl) return;
+    statusEl.textContent = message || "";
+    statusEl.style.color = isError ? "#fecaca" : "";
+  }
+
+  function clearErrors() {
+    Object.values(errorEls).forEach((el) => {
+      if (el) el.textContent = "";
+    });
+    setStatus("");
+  }
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    clearErrors();
+
+    const formData = new FormData(form);
+    const name = (formData.get("name") || "").toString().trim();
+    const email = (formData.get("email") || "").toString().trim();
+    const message = (formData.get("message") || "").toString().trim();
+
+    let hasError = false;
+
+    if (!name && errorEls.name) {
+      errorEls.name.textContent = "Please add your name.";
+      hasError = true;
+    }
+
+    if (!email && errorEls.email) {
+      errorEls.email.textContent = "Email is required.";
+      hasError = true;
+    } else if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      if (errorEls.email) errorEls.email.textContent = "Enter a valid email.";
+      hasError = true;
+    }
+
+    if (!message && errorEls.message) {
+      errorEls.message.textContent = "Tell us a bit about what you need.";
+      hasError = true;
+    }
+
+    if (hasError) {
+      setStatus("Please fix the highlighted fields.", true);
+      return;
+    }
+
+    setStatus("Sending message...");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email, message }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Request failed");
+      }
+
+      setStatus("Message sent! We’ll be in touch soon.");
+      form.reset();
+    } catch (error) {
+      console.error(error);
+      setStatus("Something went wrong sending your message. Try again or email us directly.", true);
+    }
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   setupReveal();
   setupParallax();
@@ -148,6 +230,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setupNavHighlight();
   setupLinkFilters();
   setupHeroTilt();
+  setupContactForm();
 });
 
 
