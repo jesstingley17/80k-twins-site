@@ -11,6 +11,15 @@ function setupReveal() {
     return;
   }
 
+  // Show elements immediately if they're already in view
+  revealEls.forEach((el) => {
+    const rect = el.getBoundingClientRect();
+    const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+    if (isVisible) {
+      el.classList.add("is-visible");
+    }
+  });
+
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -21,11 +30,16 @@ function setupReveal() {
       });
     },
     {
-      threshold: 0.18,
+      threshold: 0.1,
+      rootMargin: "50px",
     }
   );
 
-  revealEls.forEach((el) => observer.observe(el));
+  revealEls.forEach((el) => {
+    if (!el.classList.contains("is-visible")) {
+      observer.observe(el);
+    }
+  });
 }
 
 function setupParallax() {
@@ -445,33 +459,21 @@ document.addEventListener("DOMContentLoaded", () => {
   setupNavHighlight();
   setupLinkFilters();
   setupContactForm();
+  setupIntroVideo();
+  setupButtonRipples();
+  setupConfettiButtons();
   
-  // Defer non-critical features
-  requestIdleCallback(() => {
-    setupIntroVideo();
+  // Load other features after a short delay
+  setTimeout(() => {
     setupParallax();
     setupHeroTilt();
-    setupButtonRipples();
     setupCardTilts();
     setupAnimatedGradient();
     setupEasterEgg();
     setupMagneticButtons();
-    setupConfettiButtons();
-  }, { timeout: 2000 });
-  
-  // Defer visual effects even more
-  setTimeout(() => {
     setupCursorTrail();
     setupFloatingParticles();
-  }, 1000);
+  }, 100);
 });
-
-// Fallback for browsers without requestIdleCallback
-if (!window.requestIdleCallback) {
-  window.requestIdleCallback = (cb, opts) => {
-    const timeout = opts?.timeout || 0;
-    return setTimeout(cb, timeout);
-  };
-}
 
 
