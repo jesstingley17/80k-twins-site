@@ -1091,11 +1091,6 @@ body {
 .feature-inner {
   width: 100%;
   max-width: 100%;
-}
-
-.feature-inner {
-  width: 100%;
-  max-width: 100%;
   padding: 20px 18px 18px;
   border-radius: var(--radius-lg);
   border: 1px solid rgba(129, 140, 248, 0.7);
