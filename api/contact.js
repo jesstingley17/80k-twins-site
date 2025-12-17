@@ -28,8 +28,7 @@ module.exports = async (req, res) => {
   try {
     await resend.emails.send({
       from: "80k Twins Contact <no-reply@yourdomain.com>",
-      // TODO: change this to the real inbox you want to receive contact form messages at
-      to: ["business.80ktwins@example.com"],
+      to: ["kamar@80ktwins.com", "kiyel@80ktwins.com"],
       subject: `New contact form message from ${name}`,
       reply_to: email,
       text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
