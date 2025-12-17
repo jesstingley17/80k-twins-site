@@ -543,6 +543,11 @@ body {
   text-align: center;
 }
 
+.watch-card .section-header {
+  max-width: 100%;
+  margin-bottom: 18px;
+}
+
 .section-header h2 {
   margin: 4px 0;
   font-size: 22px;
