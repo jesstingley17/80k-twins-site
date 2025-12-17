@@ -113,17 +113,30 @@ function setupHeroTilt() {
 
   if (!hero || !avatarWrap) return;
 
+  let rafId = null;
+  let lastUpdate = 0;
+
   hero.addEventListener("pointermove", (event) => {
-    const rect = hero.getBoundingClientRect();
-    const x = (event.clientX - rect.left) / rect.width - 0.5;
-    const y = (event.clientY - rect.top) / rect.height - 0.5;
-    // Reduced from 8deg to 4deg for less motion
-    const rotateX = y * -4;
-    const rotateY = x * 4;
-    avatarWrap.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(0)`;
+    const now = performance.now();
+    // Throttle to 60fps max
+    if (now - lastUpdate < 16) return;
+    lastUpdate = now;
+
+    if (rafId) cancelAnimationFrame(rafId);
+    
+    rafId = requestAnimationFrame(() => {
+      const rect = hero.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width - 0.5;
+      const y = (event.clientY - rect.top) / rect.height - 0.5;
+      // Reduced from 8deg to 3deg for less motion
+      const rotateX = y * -3;
+      const rotateY = x * 3;
+      avatarWrap.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(0)`;
+    });
   });
 
   hero.addEventListener("pointerleave", () => {
+    if (rafId) cancelAnimationFrame(rafId);
     avatarWrap.style.transform = "";
   });
 }
@@ -300,34 +313,9 @@ function setupButtonRipples() {
   });
 }
 
-// Interactive card tilt - reduced intensity to prevent dizziness
+// Interactive card tilt - disabled to prevent glitches
 function setupCardTilts() {
-  const cards = document.querySelectorAll(".link-card, .watch-card, .about-inner, .contact-inner, .feature-inner");
-  
-  cards.forEach((card) => {
-    let rafId = null;
-    
-    card.addEventListener("mousemove", (e) => {
-      if (rafId) cancelAnimationFrame(rafId);
-      
-      rafId = requestAnimationFrame(() => {
-        const rect = card.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width - 0.5;
-        const y = (e.clientY - rect.top) / rect.height - 0.5;
-        
-        // Reduced from 3deg to 1.5deg for less motion
-        const rotateX = y * -1.5;
-        const rotateY = x * 1.5;
-        
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.01)`;
-      });
-    });
-    
-    card.addEventListener("mouseleave", () => {
-      if (rafId) cancelAnimationFrame(rafId);
-      card.style.transform = "";
-    });
-  });
+  // Disabled - was causing conflicts with other animations
 }
 
 // Animated gradient background - disabled to prevent dizziness
@@ -363,26 +351,9 @@ function setupEasterEgg() {
 
 // Removed glitch effect - was causing visual issues
 
-// Magnetic buttons (only for buttons, not cards)
+// Magnetic buttons - disabled to prevent glitches
 function setupMagneticButtons() {
-  const magneticElements = document.querySelectorAll(".btn, .filter-pill");
-  
-  magneticElements.forEach((el) => {
-    el.addEventListener("mousemove", (e) => {
-      const rect = el.getBoundingClientRect();
-      const x = e.clientX - (rect.left + rect.width / 2);
-      const y = e.clientY - (rect.top + rect.height / 2);
-      
-      const moveX = x * 0.15;
-      const moveY = y * 0.15;
-      
-      el.style.transform = `translate(${moveX}px, ${moveY}px)`;
-    });
-    
-    el.addEventListener("mouseleave", () => {
-      el.style.transform = "";
-    });
-  });
+  // Disabled - was causing transform conflicts
 }
 
 document.addEventListener("DOMContentLoaded", () => {

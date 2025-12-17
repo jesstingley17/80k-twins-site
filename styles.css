@@ -1286,17 +1286,15 @@ body {
   overflow: hidden;
 }
 
-/* Enhanced Card Hover Effects */
+/* Enhanced Card Hover Effects - optimized */
 .link-card,
 .watch-card,
 .about-inner,
 .contact-inner,
 .feature-inner {
   transition:
-    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-    box-shadow 0.3s ease,
-    border-color 0.3s ease;
-  will-change: transform;
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .link-card:hover,
