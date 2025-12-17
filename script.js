@@ -414,7 +414,7 @@ function createConfetti() {
 // Add confetti to social media buttons
 function setupConfettiButtons() {
   // Find all social media follow buttons
-  const socialButtons = document.querySelectorAll('a[href*="tiktok"], a[href*="instagram"], a[href*="youtube"], a[href*="facebook"], a[href*="twitter"]');
+  const socialButtons = document.querySelectorAll('a[href*="tiktok"], a[href*="instagram"], a[href*="youtube"], a[href*="facebook"], a[href*="twitter"], a[href*="snapchat"]');
   
   socialButtons.forEach((button) => {
     button.addEventListener('click', (e) => {
