@@ -258,6 +258,205 @@ function setupIntroVideo() {
   }, 5000);
 }
 
+// Cursor trail effect
+function setupCursorTrail() {
+  const trail = [];
+  const trailLength = 20;
+  let mouseX = 0;
+  let mouseY = 0;
+
+  // Create trail elements
+  for (let i = 0; i < trailLength; i++) {
+    const dot = document.createElement("div");
+    dot.className = "cursor-trail-dot";
+    dot.style.opacity = (trailLength - i) / trailLength * 0.4;
+    dot.style.transform = `scale(${(trailLength - i) / trailLength * 0.3})`;
+    document.body.appendChild(dot);
+    trail.push({ element: dot, x: 0, y: 0 });
+  }
+
+  let animationFrame = null;
+
+  function animate() {
+    let x = mouseX;
+    let y = mouseY;
+
+    trail.forEach((point, index) => {
+      const nextPoint = trail[index + 1] || { x, y };
+      point.x += (nextPoint.x - point.x) * 0.3;
+      point.y += (nextPoint.y - point.y) * 0.3;
+      point.element.style.left = point.x + "px";
+      point.element.style.top = point.y + "px";
+    });
+
+    animationFrame = requestAnimationFrame(animate);
+  }
+
+  document.addEventListener("mousemove", (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    if (!animationFrame) animate();
+  });
+}
+
+// Floating particles
+function setupFloatingParticles() {
+  const container = document.querySelector(".page-bg");
+  if (!container) return;
+
+  const particleCount = 30;
+  const particles = [];
+
+  for (let i = 0; i < particleCount; i++) {
+    const particle = document.createElement("div");
+    particle.className = "floating-particle";
+    const size = Math.random() * 4 + 2;
+    particle.style.width = size + "px";
+    particle.style.height = size + "px";
+    particle.style.left = Math.random() * 100 + "%";
+    particle.style.top = Math.random() * 100 + "%";
+    particle.style.animationDelay = Math.random() * 20 + "s";
+    particle.style.opacity = Math.random() * 0.5 + 0.2;
+    container.appendChild(particle);
+    particles.push(particle);
+  }
+}
+
+// Button ripple effect
+function setupButtonRipples() {
+  const buttons = document.querySelectorAll(".btn, .link-card, .filter-pill");
+  
+  buttons.forEach((button) => {
+    button.addEventListener("click", function(e) {
+      const ripple = document.createElement("span");
+      ripple.className = "ripple";
+      
+      const rect = this.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      const x = e.clientX - rect.left - size / 2;
+      const y = e.clientY - rect.top - size / 2;
+      
+      ripple.style.width = ripple.style.height = size + "px";
+      ripple.style.left = x + "px";
+      ripple.style.top = y + "px";
+      
+      this.appendChild(ripple);
+      
+      setTimeout(() => {
+        ripple.remove();
+      }, 600);
+    });
+  });
+}
+
+// Interactive card tilt on all cards
+function setupCardTilts() {
+  const cards = document.querySelectorAll(".link-card, .watch-card, .about-inner, .contact-inner, .feature-inner");
+  
+  cards.forEach((card) => {
+    card.addEventListener("mousemove", (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      
+      const rotateX = y * -3;
+      const rotateY = x * 3;
+      
+      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+    });
+    
+    card.addEventListener("mouseleave", () => {
+      card.style.transform = "";
+    });
+  });
+}
+
+// Animated gradient background
+function setupAnimatedGradient() {
+  const gradient = document.querySelector(".bg-gradient");
+  if (!gradient) return;
+  
+  let hue = 0;
+  
+  function animate() {
+    hue = (hue + 0.5) % 360;
+    const hue1 = hue;
+    const hue2 = (hue + 60) % 360;
+    const hue3 = (hue + 120) % 360;
+    
+    gradient.style.background = `
+      radial-gradient(circle at top left, hsla(${hue1}, 70%, 60%, 0.3), transparent 55%),
+      radial-gradient(circle at bottom right, hsla(${hue2}, 70%, 60%, 0.25), transparent 55%),
+      radial-gradient(circle at top right, hsla(${hue3}, 70%, 60%, 0.18), transparent 50%)
+    `;
+    
+    requestAnimationFrame(animate);
+  }
+  
+  animate();
+}
+
+// Easter egg: Konami code
+function setupEasterEgg() {
+  const konamiCode = [
+    "ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown",
+    "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight",
+    "KeyB", "KeyA"
+  ];
+  let konamiIndex = 0;
+  
+  document.addEventListener("keydown", (e) => {
+    if (e.code === konamiCode[konamiIndex]) {
+      konamiIndex++;
+      if (konamiIndex === konamiCode.length) {
+        // Trigger fun effect
+        document.body.classList.add("easter-egg-active");
+        setTimeout(() => {
+          document.body.classList.remove("easter-egg-active");
+        }, 3000);
+        konamiIndex = 0;
+      }
+    } else {
+      konamiIndex = 0;
+    }
+  });
+}
+
+// Glitch effect on hover for hero
+function setupGlitchEffect() {
+  const heroTitle = document.querySelector(".hero-title");
+  if (!heroTitle) return;
+  
+  heroTitle.addEventListener("mouseenter", () => {
+    heroTitle.classList.add("glitch");
+    setTimeout(() => {
+      heroTitle.classList.remove("glitch");
+    }, 600);
+  });
+}
+
+// Magnetic buttons (only for buttons, not cards)
+function setupMagneticButtons() {
+  const magneticElements = document.querySelectorAll(".btn, .filter-pill");
+  
+  magneticElements.forEach((el) => {
+    el.addEventListener("mousemove", (e) => {
+      const rect = el.getBoundingClientRect();
+      const x = e.clientX - (rect.left + rect.width / 2);
+      const y = e.clientY - (rect.top + rect.height / 2);
+      
+      const moveX = x * 0.15;
+      const moveY = y * 0.15;
+      
+      el.style.transform = `translate(${moveX}px, ${moveY}px)`;
+    });
+    
+    el.addEventListener("mouseleave", () => {
+      el.style.transform = "";
+    });
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   setupIntroVideo();
   setupReveal();
@@ -267,6 +466,14 @@ document.addEventListener("DOMContentLoaded", () => {
   setupLinkFilters();
   setupHeroTilt();
   setupContactForm();
+  setupCursorTrail();
+  setupFloatingParticles();
+  setupButtonRipples();
+  setupCardTilts();
+  setupAnimatedGradient();
+  setupEasterEgg();
+  setupGlitchEffect();
+  setupMagneticButtons();
 });
 
 
