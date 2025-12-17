@@ -36,6 +36,7 @@
 
         <nav class="site-nav">
           <a href="#links" class="nav-link">Links</a>
+          <a href="#watch" class="nav-link">Watch</a>
           <a href="#about" class="nav-link">About</a>
           <a href="#feature" class="nav-link">Collab</a>
         </nav>
@@ -215,98 +216,104 @@
         </div>
       </section>
 
-      <section class="youtube" id="youtube">
+      <section class="watch" id="watch">
         <header class="section-header" data-reveal>
-          <p class="eyebrow">Watch the twins</p>
-          <h2>Streaming straight from YouTube</h2>
+          <p class="eyebrow">Watch &amp; socials</p>
+          <h2>Tap into the 80k Twins feed</h2>
           <p class="section-subtitle">
-            Hit play to watch a featured video, then jump to the full channel for more.
+            A quick preview of our world on YouTube and Instagram, side by side.
           </p>
         </header>
 
-        <div class="youtube-embed" data-reveal>
-          <div class="youtube-embed-inner">
-            <!--
-              Replace VIDEO_ID_HERE with a real YouTube video ID from the 80k Twins channel,
-              e.g. src="https://www.youtube.com/embed/abcdEFGH123"
-            -->
-            <iframe
-              src="https://www.youtube.com/embed/VIDEO_ID_HERE"
-              title="80k Twins YouTube embed"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen
-            ></iframe>
+        <div class="watch-grid">
+          <div class="watch-card" data-reveal>
+            <p class="mini-label">YouTube</p>
+            <p class="mini-value">Long-form &amp; VODs</p>
+
+            <div class="youtube-embed">
+              <div class="youtube-embed-inner">
+                <!--
+                  Replace VIDEO_ID_HERE with a real YouTube video ID from the 80k Twins channel,
+                  e.g. src="https://www.youtube.com/embed/abcdEFGH123"
+                -->
+                <iframe
+                  src="https://www.youtube.com/embed/VIDEO_ID_HERE"
+                  title="80k Twins YouTube embed"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                ></iframe>
+              </div>
+            </div>
+
+            <div class="watch-cta-row">
+              <a
+                class="btn btn--ghost"
+                href="https://www.youtube.com/@80ktwins"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Open full YouTube channel
+              </a>
+            </div>
           </div>
-          <div class="youtube-cta-row">
-            <a
-              class="btn btn--ghost"
-              href="https://www.youtube.com/@80ktwins"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Open full YouTube channel
-            </a>
+
+          <div class="watch-card" data-reveal data-reveal-delay="80">
+            <p class="mini-label">Instagram</p>
+            <p class="mini-value">Reels, grid &amp; stories</p>
+
+            <div class="insta-grid">
+              <a
+                class="insta-tile insta-tile--large"
+                href="https://www.instagram.com/80ktwins/reels/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <div class="insta-media insta-media--placeholder"></div>
+                <div class="insta-overlay">
+                  <span class="insta-badge">Reels</span>
+                  <span class="insta-title">Latest chaos drops</span>
+                </div>
+              </a>
+
+              <a
+                class="insta-tile"
+                href="https://www.instagram.com/80ktwins/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <div class="insta-media insta-media--placeholder"></div>
+                <div class="insta-overlay">
+                  <span class="insta-badge">Feed</span>
+                  <span class="insta-title">Main grid energy</span>
+                </div>
+              </a>
+
+              <a
+                class="insta-tile"
+                href="https://www.instagram.com/80ktwins/stories/highlights/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <div class="insta-media insta-media--placeholder"></div>
+                <div class="insta-overlay">
+                  <span class="insta-badge">Stories</span>
+                  <span class="insta-title">Highlights &amp; moments</span>
+                </div>
+              </a>
+            </div>
+
+            <div class="insta-cta-row">
+              <a
+                class="btn btn--ghost"
+                href="https://www.instagram.com/80ktwins/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Open full Instagram profile
+              </a>
+            </div>
           </div>
-        </div>
-      </section>
-
-      <section class="instagram" id="instagram">
-        <header class="section-header" data-reveal>
-          <p class="eyebrow">Scroll the feed</p>
-          <h2>Instagram</h2>
-        </header>
-
-        <div class="insta-grid" data-reveal>
-          <a
-            class="insta-tile insta-tile--large"
-            href="https://www.instagram.com/80ktwins/reels/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <div class="insta-media insta-media--placeholder"></div>
-            <div class="insta-overlay">
-              <span class="insta-badge">Reels</span>
-              <span class="insta-title">Latest chaos drops</span>
-            </div>
-          </a>
-
-          <a
-            class="insta-tile"
-            href="https://www.instagram.com/80ktwins/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <div class="insta-media insta-media--placeholder"></div>
-            <div class="insta-overlay">
-              <span class="insta-badge">Feed</span>
-              <span class="insta-title">Main grid energy</span>
-            </div>
-          </a>
-
-          <a
-            class="insta-tile"
-            href="https://www.instagram.com/80ktwins/stories/highlights/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <div class="insta-media insta-media--placeholder"></div>
-            <div class="insta-overlay">
-              <span class="insta-badge">Stories</span>
-              <span class="insta-title">Highlights & moments</span>
-            </div>
-          </a>
-        </div>
-
-        <div class="insta-cta-row">
-          <a
-            class="btn btn--ghost"
-            href="https://www.instagram.com/80ktwins/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Open full Instagram profile
-          </a>
         </div>
       </section>
 

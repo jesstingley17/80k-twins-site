@@ -532,9 +532,31 @@ body {
   margin-bottom: 42px;
 }
 
-.youtube,
-.instagram {
+.watch {
   margin-bottom: 44px;
+}
+
+.watch-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1.1fr);
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.watch-card {
+  padding: 16px 16px 14px;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(148, 163, 184, 0.5);
+  background:
+    radial-gradient(circle at top right, rgba(56, 189, 248, 0.2), transparent 60%),
+    linear-gradient(145deg, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.9));
+  box-shadow:
+    0 22px 64px rgba(15, 23, 42, 0.95),
+    0 0 0 1px rgba(15, 23, 42, 1);
+}
+
+.watch-cta-row {
+  margin-top: 10px;
 }
 
 .youtube-embed {
@@ -956,6 +978,10 @@ body {
 
   .about-grid {
     grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.4fr);
+  }
+
+  .watch-grid {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
