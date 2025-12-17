@@ -828,6 +828,27 @@ body {
   align-items: flex-start;
 }
 
+.about-side {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.about-photo {
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(148, 163, 184, 0.6);
+  overflow: hidden;
+  box-shadow:
+    0 18px 52px rgba(15, 23, 42, 0.96),
+    0 0 0 1px rgba(15, 23, 42, 1);
+}
+
+.about-photo img {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+}
+
 .about-copy {
   font-size: 14px;
   color: #e5e7eb;
