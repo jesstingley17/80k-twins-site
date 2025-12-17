@@ -651,7 +651,7 @@ body {
 .youtube-embed-inner {
   position: relative;
   width: 100%;
-  max-width: 780px;
+  max-width: 100%;
   border-radius: var(--radius-lg);
   border: 1px solid rgba(148, 163, 184, 0.5);
   background:
@@ -689,7 +689,7 @@ body {
 .insta-embed {
   position: relative;
   width: 100%;
-  max-width: 460px;
+  max-width: 100%;
   border-radius: var(--radius-md);
   border: 1px solid rgba(148, 163, 184, 0.5);
   background:
